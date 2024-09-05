@@ -40,7 +40,7 @@ model_clima = api.model('Clima', {
     'descricao': fields.String(required=True, description='descricao', default='Sol'),
     'dia': fields.String(required=True, description='dia', default='segunda-feira'),
     'hora': fields.String(required=True, description='hora', default='12:00'),
-    'data': fields.String(required=True, description='data', default='01/12/2024')
+    'data': fields.String(required=True, description='data', default='01/09/2024')
 })
 
 
