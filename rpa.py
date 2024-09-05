@@ -1,6 +1,8 @@
 # Desenvolva um RPA para acessar o Google e pesquise por Clima e extrair informações de clima e data.
 
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,7 +14,8 @@ import requests
 
 
 def pesquisa_clima():
-    driver = webdriver.Chrome()
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
     wait = WebDriverWait(driver, 30)
     driver.get('https://www.google.com.br')
     
