@@ -3,7 +3,7 @@
 from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields
 import sqlite3
-# from rpa import pesquisa_clima
+from rpa import pesquisa_clima
 
 
 app = Flask(__name__)
@@ -13,6 +13,7 @@ api = Api(
     title='Teste Técnico',
     description='Desenvolvimento de API com Integração de RPA'
 )
+
 
 # banco de dados
 def create_db():
@@ -35,13 +36,21 @@ create_db()
 
 #  model
 model_clima = api.model('Clima', {
-    'temperatura': fields.String(required=True, description='temperatura'),
-    'descricao': fields.String(required=True, description='descricao'),
-    'dia': fields.String(required=True, description='dia'),
-    'hora': fields.String(required=True, description='hora'),
-    'data': fields.String(required=True, description='data')
+    'temperatura': fields.String(required=True, description='temperatura', default='42 C'),
+    'descricao': fields.String(required=True, description='descricao', default='Sol'),
+    'dia': fields.String(required=True, description='dia', default='segunda-feira'),
+    'hora': fields.String(required=True, description='hora', default='12:00'),
+    'data': fields.String(required=True, description='data', default='01/12/2024')
 })
 
+
+# [GET] /rpa: Endpoint que executa o RPA e retorna os dados extraídos.
+@api.route('/rpa')
+class RPA(Resource):
+    def get(self):
+        pesquisa_clima()
+        return {'message': 'RPA executado.'}, 200
+    
 
 # [POST] /store-data: Endpoint que recebe os dados extraídos pelo RPA e os armazena no banco de dados.
 @api.route('/store-data')
